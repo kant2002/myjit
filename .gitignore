@@ -1,2 +1,5 @@
 inc/
 jit/
+eng/
+build/
+*.cmake
