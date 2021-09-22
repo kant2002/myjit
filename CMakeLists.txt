@@ -20,6 +20,9 @@ include(${CLR_ENG_NATIVE_DIR}/configurecompiler.cmake)
 include(clrdefinitions.cmake)
 include(pgosupport.cmake)
 
+add_subdirectory(pal/prebuilt/inc)
+
+include_directories("pal/prebuilt/inc")
 
 set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
 
