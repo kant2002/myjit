@@ -22,7 +22,10 @@ if(MSVC)
 endif (MSVC)
 
 # Set commonly used directory names
+set(CLR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(VM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vm)
 set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
+set(GENERATED_EVENTING_DIR ${CMAKE_CURRENT_BINARY_DIR}/Eventing)
 
 set(CORECLR_SET_RPATH ON)
 
@@ -48,6 +51,12 @@ set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
 
 add_component(jit)
 add_component(alljits)
+#add_component(runtime)
+
+if(CLR_CMAKE_HOST_UNIX)
+    add_subdirectory(pal)
+endif(CLR_CMAKE_HOST_UNIX)
+
 
 # Have issues with MIDL when uncomment this line.
 #add_subdirectory(inc)
