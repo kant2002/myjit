@@ -17,7 +17,7 @@ or
 .\prepare.ps1 -CoreClrRoot c:\runtime\
 ```
 
-Go to `jit/CMakeLists.txt` and comment line `add_subdirectory(static)`. Not start build
+Go to `jit/CMakeLists.txt` and comment line `add_subdirectory(static)`. Now start building
 
 ```
 cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCLR_CMAKE_HOST_ARCH=x64 -DCMAKE_SYSTEM_VERSION=10.0 -DCMAKE_INSTALL_PREFIX=bin

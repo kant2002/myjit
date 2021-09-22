@@ -17,6 +17,15 @@ project(MyJIT)
 include(eng/native/configurepaths.cmake)
 include(${CLR_ENG_NATIVE_DIR}/configurecompiler.cmake)
 
+if(MSVC)
+  set(CMAKE_CXX_STANDARD_LIBRARIES "") # do not link against standard win32 libs i.e. kernel32, uuid, user32, etc.
+endif (MSVC)
+
+# Set commonly used directory names
+set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
+
+set(CORECLR_SET_RPATH ON)
+
 include(clrdefinitions.cmake)
 include(pgosupport.cmake)
 
@@ -24,10 +33,24 @@ add_subdirectory(pal/prebuilt/inc)
 
 include_directories("pal/prebuilt/inc")
 
+if (CLR_CMAKE_HOST_UNIX)
+  include_directories("pal/inc")
+  include_directories("pal/inc/rt")
+  include_directories("pal/src/safecrt")
+endif (CLR_CMAKE_HOST_UNIX)
+
+# Add Product Directories
+#------------------------------
+include_directories("inc")
+include_directories("${GENERATED_INCLUDE_DIR}")
+
 set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
 
 add_component(jit)
 add_component(alljits)
+
+# Have issues with MIDL when uncomment this line.
+#add_subdirectory(inc)
 
 add_subdirectory(jit)
 
