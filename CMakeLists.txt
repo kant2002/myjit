@@ -29,8 +29,30 @@ set(GENERATED_EVENTING_DIR ${CMAKE_CURRENT_BINARY_DIR}/Eventing)
 
 set(CORECLR_SET_RPATH ON)
 
-include(clrdefinitions.cmake)
 include(pgosupport.cmake)
+set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME coreclr_misc)
+
+add_component(alljits)
+add_component(jit)
+add_component(alljits)
+#add_component(runtime)
+add_component(coreclr_misc)
+add_component(coreclr_misc)
+add_dependencies(jit coreclr_misc)
+add_dependencies(alljits coreclr_misc)
+
+#add_definitions(-DPAL_STDCPP_COMPAT=1)
+
+# Add Product Directories
+#------------------------------
+include_directories("inc")
+include_directories("native")
+
+if(CLR_CMAKE_HOST_UNIX)
+    add_subdirectory(pal)
+endif(CLR_CMAKE_HOST_UNIX)
+
+include(clrdefinitions.cmake)
 
 add_subdirectory(pal/prebuilt/inc)
 
@@ -41,21 +63,10 @@ if (CLR_CMAKE_HOST_UNIX)
   include_directories("pal/inc/rt")
   include_directories("pal/src/safecrt")
 endif (CLR_CMAKE_HOST_UNIX)
-
-# Add Product Directories
-#------------------------------
-include_directories("inc")
 include_directories("${GENERATED_INCLUDE_DIR}")
 
 set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
-
-add_component(jit)
-add_component(alljits)
-#add_component(runtime)
-
-if(CLR_CMAKE_HOST_UNIX)
-    add_subdirectory(pal)
-endif(CLR_CMAKE_HOST_UNIX)
+set(COREPAL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pal)
 
 
 # Have issues with MIDL when uncomment this line.

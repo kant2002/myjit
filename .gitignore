@@ -3,4 +3,7 @@ jit/
 eng/
 build/
 pal/
+native/
+scripts/
+artifacts/
 *.cmake
