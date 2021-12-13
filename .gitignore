@@ -16,4 +16,5 @@ gcdump/
 gcinfo/
 md/
 minipal/
+vm/
 *.cmake
