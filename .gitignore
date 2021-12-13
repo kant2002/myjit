@@ -6,4 +6,12 @@ pal/
 native/
 scripts/
 artifacts/
+dlls/
+palrt/
+nativeresources/
+utilcode/
+debug/
+gc/
+md/
+minipal/
 *.cmake

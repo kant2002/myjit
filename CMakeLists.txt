@@ -54,6 +54,7 @@ endif(CLR_CMAKE_HOST_UNIX)
 include(clrdefinitions.cmake)
 
 add_subdirectory(pal/prebuilt/inc)
+add_subdirectory(minipal)
 
 include_directories("pal/prebuilt/inc")
 
@@ -62,9 +63,49 @@ if (CLR_CMAKE_HOST_UNIX)
   include_directories("pal/inc/rt")
   include_directories("pal/src/safecrt")
 endif (CLR_CMAKE_HOST_UNIX)
+
 include_directories("inc")
+include_directories("debug/inc")
+include_directories("debug/inc/amd64")
+include_directories("debug/inc/dump")
+include_directories("md/inc")
 include_directories("${GENERATED_INCLUDE_DIR}")
-include_directories("pal/inc/rt/cpp")
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories("minipal")
+
+if(CLR_CMAKE_HOST_UNIX)
+  include_directories("pal/inc/rt/cpp")
+ 
+  set (NATIVE_RESOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nativeresources)
+  include_directories(${NATIVE_RESOURCE_DIR})
+  set (PROCESS_RC_SCRIPT ${NATIVE_RESOURCE_DIR}/processrc.sh)
+  set (RESOURCE_STRING_HEADER_DIR ${NATIVE_RESOURCE_DIR})
+
+  # Create a command to create a C++ source file containing an array of
+  # NativeStringResource structs which represent the information from a
+  # given Windows .rc file. The target C++ file path is returned in the
+  # variable specified by the TARGET_FILE parameter.
+  function(build_resources SOURCE TARGET_NAME TARGET_FILE)
+
+    set(PREPROCESSED_SOURCE ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}.rc.i)
+
+    preprocess_file(${SOURCE} ${PREPROCESSED_SOURCE})
+
+    set(RESOURCE_ENTRY_ARRAY_CPP ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_NAME}.cpp)
+
+    add_custom_command(
+      OUTPUT ${RESOURCE_ENTRY_ARRAY_CPP}
+      # Convert the preprocessed .rc file to a C++ file which will be used to make a static lib.
+      COMMAND ${PROCESS_RC_SCRIPT} ${PREPROCESSED_SOURCE} ${TARGET_NAME} >${RESOURCE_ENTRY_ARRAY_CPP}
+            DEPENDS ${PREPROCESSED_SOURCE} ${PROCESS_RC_SCRIPT}
+    )
+
+    include_directories(${RESOURCE_STRING_HEADER_DIR})
+    set(${TARGET_FILE} ${RESOURCE_ENTRY_ARRAY_CPP} PARENT_SCOPE)
+
+  endfunction()
+
+endif (CLR_CMAKE_HOST_UNIX)
 
 set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
 set(COREPAL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pal)
@@ -73,5 +114,11 @@ set(COREPAL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pal)
 # Have issues with MIDL when uncomment this line.
 #add_subdirectory(inc)
 
+add_subdirectory(palrt)
+add_subdirectory(md)
+#add_subdirectory(debug)
+add_subdirectory(utilcode)
+add_subdirectory(dlls/mscorrc)
+add_subdirectory(nativeresources)
 add_subdirectory(jit)
 
