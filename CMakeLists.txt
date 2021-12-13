@@ -45,7 +45,6 @@ add_dependencies(alljits coreclr_misc)
 
 # Add Product Directories
 #------------------------------
-include_directories("inc")
 include_directories("native")
 
 if(CLR_CMAKE_HOST_UNIX)
@@ -63,7 +62,9 @@ if (CLR_CMAKE_HOST_UNIX)
   include_directories("pal/inc/rt")
   include_directories("pal/src/safecrt")
 endif (CLR_CMAKE_HOST_UNIX)
+include_directories("inc")
 include_directories("${GENERATED_INCLUDE_DIR}")
+include_directories("pal/inc/rt/cpp")
 
 set(GENERATED_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/inc)
 set(COREPAL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/pal)
