@@ -11,8 +11,11 @@ mkdir -p gc/env
 cp ${CORECLR_ROOT}src/coreclr/gc/env/etmdummy.h gc/env/
 mkdir -p native
 cp ${CORECLR_ROOT}src/native/* native/ -rf
+cp ${CORECLR_ROOT}src/coreclr/gcinfo . -rf
+cp ${CORECLR_ROOT}src/coreclr/gcdump . -rf
 cp ${CORECLR_ROOT}src/coreclr/pal . -rf
 cp ${CORECLR_ROOT}src/coreclr/palrt . -rf
+cp ${CORECLR_ROOT}src/coreclr/debug . -rf
 cp ${CORECLR_ROOT}src/coreclr/scripts . -rf
 cp ${CORECLR_ROOT}src/coreclr/nativeresources . -rf
 cp ${CORECLR_ROOT}src/coreclr/utilcode . -rf
@@ -55,6 +58,7 @@ Now start building
 ```
 cmake -B build -DCMAKE_BUILD_TYPE=Debug -DCLR_CMAKE_HOST_ARCH=x64 -DCMAKE_SYSTEM_VERSION=10.0 -DCMAKE_INSTALL_PREFIX=bin -DFEATURE_EVENT_TRACE=OFF
 cmake --build build
+cmake --install build --prefix artifacts
 ```
 
 On Linux I was adding `-DCMAKE_CXX_COMPILER_ID=clang -DCMAKE_C_COMPILER_ID=clang -G Ninja`, but dit not progress with that.

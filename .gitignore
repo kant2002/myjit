@@ -12,6 +12,8 @@ nativeresources/
 utilcode/
 debug/
 gc/
+gcdump/
+gcinfo/
 md/
 minipal/
 *.cmake

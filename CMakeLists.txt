@@ -120,5 +120,6 @@ add_subdirectory(md)
 add_subdirectory(utilcode)
 add_subdirectory(dlls/mscorrc)
 add_subdirectory(nativeresources)
+add_subdirectory(gcinfo)
 add_subdirectory(jit)
 
