@@ -65,5 +65,5 @@ On Linux I was adding `-DCMAKE_CXX_COMPILER_ID=clang -DCMAKE_C_COMPILER_ID=clang
 
 Cleanup
 ```
-rm -rf {native,inc,eng,scripts,jit}
+rm -rf {native,inc,eng,scripts,jit,debug,dlls,gc,gcdump,gcinfo,md,minipal,nativeresources,pal,palrt,utilcode,vm}
 ```
