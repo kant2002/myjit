@@ -44,6 +44,8 @@ cat <<EOF > build/runtime_version.h
 
 #define RuntimeProductVersion 7.0.0-dev
 EOF
+patch -p1 -d jit < jit.patch
+patch -p1 -d pal < pal.patch
 ```
 
 or 
@@ -51,6 +53,7 @@ or
 .\prepare.ps1 -CoreClrRoot c:\runtime\
 ```
 
+Only on windows if patch command not applied.
 Go to `jit/CMakeLists.txt` and comment line `add_subdirectory(static)`. 
 Go to `pal/CMakeLists.txt` and comment line `add_subdirectory(tests)`. 
 Now start building

@@ -1,0 +1,8 @@
+--- pal/CMakeLists.txt	2021-12-14 18:37:58.577513339 +0600
++++ pal/CMakeLists.txt.new	2021-12-13 16:28:57.060085772 +0600
+@@ -10,4 +10,4 @@
+ add_definitions(-DUSE_STL)
+ 
+ add_subdirectory(src)
+-add_subdirectory(tests)
++#add_subdirectory(tests)
