@@ -1,0 +1,14 @@
+{
+    "cmake.configureSettings":{
+        "CLR_CMAKE_HOST_ARCH":"x64",
+        "CMAKE_INSTALL_PREFIX":"bin",
+        "FEATURE_EVENT_TRACE":false,
+        "CMAKE_SYSTEM_VERSION":"10.0"
+    },
+    "cmake.configureArgs":[
+        "-DCLR_CMAKE_HOST_ARCH=x64",
+        "-DCMAKE_SYSTEM_VERSION=10.0",
+        "-DCMAKE_INSTALL_PREFIX=bin",
+        "-DFEATURE_EVENT_TRACE=OFF"
+    ]
+}
